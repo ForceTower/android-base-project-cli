@@ -35,6 +35,14 @@ class TemplateProcessor constructor(
             .replace("_P_NAME_", name)
         buildGradleFile.writeText(nextBuildGradleText)
 
+        // Step: settings.gradle changes
+        val settingsGradleFile = File(outputFolder, "settings.gradle")
+        val nextSettingsGradleText = settingsGradleFile.readText()
+            .replace("dev.forcetower.application", packageName)
+            .replace("_M_NAME_", singleModelName)
+            .replace("_P_NAME_", name)
+        settingsGradleFile.writeText(nextSettingsGradleText)
+
         // Step: prepare to copy to new package
         val initialPackageFolder = File(outputFolder, "app/src/main/java/dev/forcetower/application")
         val nextPackageFolder = File(outputFolder, "app/src/main/java/${packageName.replace(".", "/")}")
