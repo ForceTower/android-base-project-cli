@@ -46,8 +46,8 @@ class TemplateProcessor constructor(
         moveFilesAndChangeContent(initialTestPackageFolder, nextTestPackageFolder)
 
         // Step: androidTest folders
-        val initialAndroidTestPackageFolder = File(outputFolder, "app/src/test/java/dev/forcetower/application")
-        val nextAndroidTestPackageFolder = File(outputFolder, "app/src/test/java/${packageName.replace(".", "/")}")
+        val initialAndroidTestPackageFolder = File(outputFolder, "app/src/androidTest/java/dev/forcetower/application")
+        val nextAndroidTestPackageFolder = File(outputFolder, "app/src/androidTest/java/${packageName.replace(".", "/")}")
         moveFilesAndChangeContent(initialAndroidTestPackageFolder, nextAndroidTestPackageFolder)
 
         CommandRunner.exec("git init")
