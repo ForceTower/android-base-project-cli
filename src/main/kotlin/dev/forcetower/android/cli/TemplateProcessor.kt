@@ -57,8 +57,6 @@ class TemplateProcessor constructor(
         val initialAndroidTestPackageFolder = File(outputFolder, "app/src/androidTest/java/dev/forcetower/application")
         val nextAndroidTestPackageFolder = File(outputFolder, "app/src/androidTest/java/${packageName.replace(".", "/")}")
         moveFilesAndChangeContent(initialAndroidTestPackageFolder, nextAndroidTestPackageFolder)
-
-        CommandRunner.exec("cd $outputPath; git init; git add .; git commit -m \"Batman! This commit has no parents\"")
     }
 
     private fun moveFilesAndChangeContent(source: File, target: File) {
@@ -126,9 +124,14 @@ class TemplateProcessor constructor(
             usable = ff
         }
 
-        // change package name
         val next = usable.readText()
+            .replace(Regex("package dev\\.forcetower\\.application\\.([a-zA-Z\\.]*)(_M_NAME_)")) {
+                it.value.replace("_M_NAME_", singleModelName.toLowerCase())
+            }
             .replace("dev.forcetower.application", packageName)
+            .replace("._M_NAME_.", ".${singleModelName.toLowerCase()}.")
+            .replace("._M_NAME_\n", ".$singleModelName\n")
+            .replace("._M_NAME_", ".$singleModelName")
             .replace("_M_NAME_", singleModelName)
             .replace("_P_NAME_", name)
 
