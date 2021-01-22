@@ -50,9 +50,7 @@ class TemplateProcessor constructor(
         val nextAndroidTestPackageFolder = File(outputFolder, "app/src/androidTest/java/${packageName.replace(".", "/")}")
         moveFilesAndChangeContent(initialAndroidTestPackageFolder, nextAndroidTestPackageFolder)
 
-        CommandRunner.exec("git init")
-        CommandRunner.exec("git add .")
-        CommandRunner.exec("git commit -m \"Batman! This commit has no parents\"")
+        CommandRunner.exec("cd $outputPath; git init; git add .; git commit -m \"Batman! This commit has no parents\"")
     }
 
     private fun moveFilesAndChangeContent(source: File, target: File) {
